@@ -1,0 +1,185 @@
+/* ============================================
+   CARD — Clean Minimal Design
+   ============================================ */
+
+.card {
+  width: 88px;
+  height: 132px;
+  border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              box-shadow 0.25s ease;
+  user-select: none;
+  background-color: white;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid white;
+  flex-shrink: 0;
+}
+
+.card:hover:not(.disabled) {
+  transform: translateY(-12px) scale(1.04);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.5);
+  z-index: 10;
+}
+
+.card.pressed {
+  transform: scale(0.92) !important;
+}
+
+.card.disabled {
+  cursor: default;
+  opacity: 0.75;
+}
+
+/* Card Back */
+.card-back {
+  background: linear-gradient(145deg, #1a1a2e, #16213e);
+  border-color: #1a1a2e;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-back-inner {
+  width: 88%;
+  height: 92%;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-back-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+.uno-logo {
+  font-family: 'Arial Black', sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  color: white;
+  text-shadow: 2px 2px 0 #ef4444;
+  transform: rotate(-15deg);
+  letter-spacing: -2px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Card Colors */
+.card-red    { background-color: #ef4444; border-color: #dc2626; }
+.card-blue   { background-color: #3b82f6; border-color: #2563eb; }
+.card-green  { background-color: #22c55e; border-color: #16a34a; }
+.card-yellow { background-color: #eab308; border-color: #ca8a04; }
+.card-wild   { background: linear-gradient(135deg, #1a1a1a, #2a2a2a); border-color: #333; }
+
+/* Card face layout */
+.card-face {
+  width: 100%;
+  height: 100%;
+  padding: 7px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
+}
+
+.card-corner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+
+.corner-value {
+  font-size: 16px;
+  font-weight: 800;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.corner-label {
+  font-size: 6px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.card-bottom-right {
+  transform: rotate(180deg);
+}
+
+.card-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-oval {
+  width: 54px;
+  height: 80px;
+  background-color: rgba(255,255,255,0.95);
+  border-radius: 50%;
+  transform: rotate(25deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.15);
+}
+
+.center-value {
+  font-size: 40px;
+  font-weight: 900;
+  transform: rotate(-25deg);
+  line-height: 1;
+}
+
+.card-red    .center-value { color: #ef4444; }
+.card-blue   .center-value { color: #3b82f6; }
+.card-green  .center-value { color: #22c55e; }
+.card-yellow .center-value { color: #eab308; }
+
+/* Wild card circles */
+.wild-circles {
+  width: 36px;
+  height: 54px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  transform: rotate(-25deg);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.circle { width: 100%; height: 100%; }
+.circle.red    { background: #ef4444; }
+.circle.blue   { background: #3b82f6; }
+.circle.yellow { background: #eab308; }
+.circle.green  { background: #22c55e; }
+
+/* Playable card highlight */
+.card.playable {
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.6), 0 4px 16px rgba(0,0,0,0.4);
+  animation: playable-glow 2s ease-in-out infinite;
+}
+
+@keyframes playable-glow {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(255,255,255,0.4), 0 4px 16px rgba(0,0,0,0.4); }
+  50%       { box-shadow: 0 0 0 2px rgba(255,255,255,0.9), 0 4px 24px rgba(0,0,0,0.5); }
+}
+
+/* Entry animation */
+.animate-entry {
+  animation: card-enter 0.4s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+@keyframes card-enter {
+  from { opacity: 0; transform: translateY(40px) rotate(8deg); }
+  to   { opacity: 1; transform: translateY(0) rotate(0); }
+}
