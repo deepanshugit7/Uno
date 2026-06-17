@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Card body with rounded corners -->
+  <rect x="4" y="4" width="56" height="56" rx="10" ry="10" fill="#d7263d"/>
+  <!-- Card border highlight -->
+  <rect x="4" y="4" width="56" height="56" rx="10" ry="10" fill="none" stroke="#ff6b6b" stroke-width="2"/>
+  <!-- White oval / inner card face -->
+  <ellipse cx="32" cy="32" rx="20" ry="25" fill="white" opacity="0.92"/>
+  <!-- UNO text -->
+  <text
+    x="32"
+    y="38"
+    font-family="Arial Black, Arial, sans-serif"
+    font-weight="900"
+    font-size="17"
+    text-anchor="middle"
+    letter-spacing="-0.5"
+    fill="#d7263d"
+  >UNO</text>
+  <!-- Top-left small number hint -->
+  <text x="9" y="16" font-family="Arial, sans-serif" font-weight="700" font-size="9" fill="white">1</text>
+  <!-- Bottom-right small number hint (rotated) -->
+  <text x="55" y="52" font-family="Arial, sans-serif" font-weight="700" font-size="9" fill="white" text-anchor="end" transform="rotate(180,55,52)">1</text>
+</svg>

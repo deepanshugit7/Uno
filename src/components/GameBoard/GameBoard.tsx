@@ -274,10 +274,16 @@ const GameBoard: React.FC<GameBoardProps> = ({ playerName, botCount, humanCount,
     play('click');
   };
 
-  // Determine which human player's hand to show at the bottom
+  // Determine which human player's hand to always show at the bottom.
+  // In single-human mode: always show player index 0.
+  // In hot-seat mode: show the currently-active human seat.
+  const viewerPlayerIndex = humanCount === 1 ? 0 : (showHandoff ? lastHumanIndexRef.current : state.currentPlayerIndex);
+  const viewerPlayer = state.players[viewerPlayerIndex];
+  const isViewerTurn = isPlayerTurn && state.currentPlayerIndex === viewerPlayerIndex;
+
   const showUnoBtn =
-    isPlayerTurn &&
-    currentPlayer?.hand.length === 2 &&
+    isViewerTurn &&
+    viewerPlayer?.hand.length === 2 &&
     !state.hasYelledUno;
 
   return (
@@ -397,44 +403,46 @@ const GameBoard: React.FC<GameBoardProps> = ({ playerName, botCount, humanCount,
         )}
       </section>
 
-      {/* Player section */}
-      {!showHandoff && (
-        <section className="player-area">
-          <div className="player-bar">
-            <div className="player-info">
-              <span className={`status-dot ${isPlayerTurn ? 'active' : ''}`} />
-              <span className="player-name-label">{currentPlayer?.isAI ? '' : currentPlayer?.name}</span>
-              <span className="card-count-badge">{currentPlayer?.isAI ? '' : currentPlayer?.hand.length}</span>
-              {state.hasYelledUno && !currentPlayer?.isAI && (
-                <span className="uno-badge">UNO</span>
-              )}
-            </div>
+      {/* Player section — always visible so the human can always see their cards */}
+      <section className={`player-area ${showHandoff ? 'hand-dimmed' : ''}`}>
+        <div className="player-bar">
+          <div className="player-info">
+            <span className={`status-dot ${isViewerTurn ? 'active' : ''}`} />
+            <span className="player-name-label">{viewerPlayer?.isAI ? '' : viewerPlayer?.name}</span>
+            <span className="card-count-badge">{viewerPlayer?.isAI ? '' : viewerPlayer?.hand.length}</span>
+            {state.hasYelledUno && !viewerPlayer?.isAI && (
+              <span className="uno-badge">UNO</span>
+            )}
           </div>
-
-          {/* UNO Button — big, near the hand */}
-          {showUnoBtn && (
-            <div className="uno-float-zone">
-              <button id="uno-call-btn" className="uno-btn-large" onClick={handleUno}>
-                <span className="uno-btn-text">UNO!</span>
-                <span className="uno-btn-flame">🔥</span>
-              </button>
-            </div>
+          {!isViewerTurn && !showHandoff && (
+            <div className="waiting-label">Waiting for turn…</div>
           )}
+        </div>
 
-          <div className="player-hand">
-            {!currentPlayer?.isAI && currentPlayer?.hand.map((card, idx) => (
-              <Card
-                key={card.id}
-                card={card}
-                onClick={() => handleHandCardClick(card.id)}
-                isPlayable={isPlayerTurn && canPlayCard(card, topCard, state.currentColor)}
-                animateEntry
-                animateIndex={idx}
-              />
-            ))}
+        {/* UNO Button — big, near the hand */}
+        {showUnoBtn && (
+          <div className="uno-float-zone">
+            <button id="uno-call-btn" className="uno-btn-large" onClick={handleUno}>
+              <span className="uno-btn-text">UNO!</span>
+              <span className="uno-btn-flame">🔥</span>
+            </button>
           </div>
-        </section>
-      )}
+        )}
+
+        <div className="player-hand">
+          {viewerPlayer && !viewerPlayer.isAI && viewerPlayer.hand.map((card, idx) => (
+            <Card
+              key={card.id}
+              card={card}
+              onClick={isViewerTurn ? () => handleHandCardClick(card.id) : undefined}
+              isPlayable={isViewerTurn && canPlayCard(card, topCard, state.currentColor)}
+              disabled={!isViewerTurn}
+              animateEntry
+              animateIndex={idx}
+            />
+          ))}
+        </div>
+      </section>
 
       {state.status === 'gameover' && winnerPlayer && (
         <GameOverModal

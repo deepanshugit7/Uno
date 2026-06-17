@@ -18,12 +18,14 @@ Everything runs in the browser — no server, no sign-up, no download required. 
 - **Local Multiplayer (Hot-Seat)** — Up to 4 human players can share a single device; a full-screen handoff overlay appears between turns so cards stay secret
 - **AI Opponents** — Play against 1 to 3 bots that take their turns automatically
 - **Full UNO Rules** — Skip, Reverse, Draw 2, Wild, and Wild Draw 4 all work correctly
+- **Always-Visible Hand** — Your cards are always shown at the bottom of the screen, even while bots or other players take their turn — they appear dimmed and non-interactive, but you can always plan your strategy in advance
 - **Big UNO Button** — A large, animated UNO! button appears right above your hand cards when you have 2 cards left — impossible to miss
 - **Synthesized Sound** — 8 unique sound effects generated in real-time using the Web Audio API
 - **Particle Background** — Animated canvas effect on the start screen
 - **Dark Theme** — Sleek dark UI with color-coded cards and smooth transitions
 - **Auto Reshuffle** — When the draw pile runs out, the discard pile is reshuffled automatically
 - **Win Detection** — Game ends the moment any player plays their last card
+- **Custom Favicon** — UNO-branded SVG favicon that appears in the browser tab, bookmark bar, and Vercel deployments
 
 ---
 
@@ -54,6 +56,9 @@ Uno/
 ├── vite.config.ts              # Vite bundler configuration
 ├── tsconfig.json               # TypeScript configuration
 ├── tsconfig.node.json          # TypeScript config for Vite's Node environment
+│
+├── public/
+│   └── favicon.svg             # Custom UNO-branded SVG favicon (red card, white oval, bold UNO text)
 │
 └── src/
     ├── main.tsx                # Mounts <App /> into the DOM
